@@ -69,29 +69,34 @@ console.log(oddNumbers([4, 2, 5, 6, 2, 7]));
 
 
 // Bài 5: Viết function truyền vào 1 chuỗi, hãy sao chép đó chuỗi lên 10 lần, ngăn cách nhau bởi dấu gạch ngang (Sử dụng array để làm)
-
-function repeatStringWithSeparator(str, times, separator) {
-    // Tạo một mảng gồm `times` phần tử, mỗi phần tử là chuỗi `str`
-    let repeatedArray = new Array(times).fill(str);
+// Ví dụ: repeatString(‘a’) => Kết quả trả về là ‘a-a-a-a-a-a-a-a-a-a’
+function repeatString(str) {
+    // Tạo một mảng gồm 10 phần tử, mỗi phần tử là chuỗi str
+    let repeatedArray = new Array(10).fill(str);
     
-    // Sử dụng `join` để nối các phần tử trong mảng với `separator` giữa chúng
-    let repeatedString = repeatedArray.join(separator);
+    // Dùng phương thức join để nối các chuỗi trong mảng lại với nhau, cách nhau bởi dấu '-'
+    let repeatedString = repeatedArray.join('-');
     
     return repeatedString;
-}
+  }
+  console.log(repeatString('a'));
 
-// Chuỗi cần sao chép
-let inputString = "a";
 
-// Số lần sao chép
-let numberOfTimes = 10;
+  // 6. Viết function truyền vào 1 chuỗi, kiểm tra xem chuỗi đó có phải chuỗi đối xứng hay không (chuỗi đối xứng là chuỗi đọc xuôi hay ngược đều như nhau, không tính khoảng trắng, không phân biệt hoa thường), kết quả trả về true hoặc false.
+  function isSymmetric(str) {
+    // Chuẩn hóa chuỗi: loại bỏ khoảng trắng và chuyển về chữ thường
+    const normalizedStr = str.replace(/\s/g, '').toLowerCase();
+    
+    // Kiểm tra chuỗi đối xứng
+    for (let i = 0; i < normalizedStr.length / 2; i++) {
+      if (normalizedStr[i] !== normalizedStr[normalizedStr.length - 1 - i]) {
+        return false;
+      }
+    }
+    
+    return true;
+  }
 
-// Dấu phân cách
-let separator = "-";
-
-// Gọi hàm và in kết quả
-let result = repeatStringWithSeparator(inputString, numberOfTimes, separator);
-console.log(result);
 
 
 
