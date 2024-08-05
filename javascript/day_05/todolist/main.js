@@ -115,6 +115,25 @@ const toggleStatus = id => {
     renderTodos(todos);
 };
 
+// 6. Search công việc
+const btnSearch = document.getElementById("btn-search");
+btnSearch.addEventListener("click", () => {
+    const keyword = inputTodo.value.trim().toLowerCase();
+    if (keyword.length === 0) {
+        alert("Nhập từ khóa tìm kiếm");
+        return;
+    }
+    // Tìm kiếm trong danh sách todos
+    const filteredTodos = todos.filter(todo => todo.title.toLowerCase().includes(keyword));
+    renderTodos(filteredTodos);
+});
+
+inputTodo.addEventListener("input", () => {
+    if (inputTodo.value.trim() === "") {
+        getAllTodos();
+    }
+});
+
 
 
 
