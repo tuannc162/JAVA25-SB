@@ -1,7 +1,6 @@
-package com.example.demoapp.dao;
+package com.example.homeworkDay12.dao;
 
-
-import com.example.demoapp.model.Book;
+import com.example.homeworkDay12.model.Book;
 
 import java.util.List;
 
@@ -14,5 +13,4 @@ public interface BookDAO {
     List<Book> findByTitleContainsIgnoreCase(String keyword);
 
     List<Book> sortBookByYear ();
-
 }

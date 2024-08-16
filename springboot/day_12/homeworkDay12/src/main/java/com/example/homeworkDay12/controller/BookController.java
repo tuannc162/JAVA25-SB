@@ -1,27 +1,17 @@
-package com.example.demoapp.controller;
+package com.example.homeworkDay12.controller;
 
-
-import com.example.demoapp.model.Book;
-import com.example.demoapp.service.BookService;
+import com.example.homeworkDay12.model.Book;
+import com.example.homeworkDay12.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
-
-/*
-* Controller: Là nơi tiếp nhận các request từ client, xử lý và trả về response
-* @Controller: Các controller trả về Template (giao diện). Ngoài ra có thể trả về dữ liệu dạng JSON, XML,...
-* @ResrController: Các controller trả về dữ liệu dạng JSON, XML,...
-* @ResController = @Controller + @ResponseBody
-* @ResponseBody: Chỉ trả về dữ liệu, không trả về Template. Dữ liệu trả về có thể là JSON, XML,...
-* ResponseEmtity<?>: Class đại diện cho 1 đối tượng response, có thể set status code, header,...
- */
-
+import java.util.List;
 
 @Controller
 @RequestMapping("/books")
@@ -74,3 +64,4 @@ public class BookController {
         return ResponseEntity.ok(result);
     }
 }
+
