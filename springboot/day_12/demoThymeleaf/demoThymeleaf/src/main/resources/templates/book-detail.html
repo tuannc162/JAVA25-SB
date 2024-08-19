@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${book == null ? 'Not Found' : book.title}">Title</title>
+</head>
+<body>
+<h2 th:if="${book == null}">Book Not Found</h2>
+
+<th:block th:if="${book != null}">
+    <h2>Thông tin sách</h2>
+    <p th:text="${book.getTitle()}"></p>
+    <p th:text="${book.author}"></p>
+    <p th:text="${book.year}"></p>
+    <p th:text="${book.id}"></p>
+
+    <h3>Sách liên quan</h3>
+    <h4 th:if="${relatedBooks.isEmpty()}">Không có sách liên quan</h4>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Year</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="relatedBook : ${relatedBooks}" th:styleappend="${relatedBook.id % 2 == 1 ? 'background-color: #cde2d4' : ''}">
+            <td th:text="${relatedBook.id}"></td>
+            <td th:text="${relatedBook.title}"></td>
+            <td th:text="${relatedBook.author}"></td>
+            <td th:text="${relatedBook.year}"></td>
+            <td>
+                <a th:href="|/books/${relatedBook.id}|">Xem chi tiết</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+</th:block>
+</body>
+</html>
