@@ -22,7 +22,7 @@ public class BookController {
 
     public BookController() {
         Faker faker = new Faker();
-        int numberOfAuthors = 10;  // Số lượng tác giả khác nhau
+        int numberOfAuthors = 10;
         List<String> authors = new ArrayList<>();
 
         for (int i = 0; i < numberOfAuthors; i++) {
@@ -42,7 +42,6 @@ public class BookController {
                     .year(faker.number().numberBetween(1950, 2020))
                     .createDate(createdDate)
                     .build();
-
             books.add(book);
         }
     }
@@ -65,6 +64,9 @@ public class BookController {
         model.addAttribute("books", newBooks);
         return "index";
     }
+
+
+
 
     // http://localhost:8080/books
     // http://localhost:8080/books?page=1&size=10

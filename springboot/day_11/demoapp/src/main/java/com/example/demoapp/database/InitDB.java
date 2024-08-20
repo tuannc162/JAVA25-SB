@@ -8,18 +8,18 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class InitDB implements CommandLineRunner {
-//    @Qualifier("jsonFileReader")
+    @Qualifier("jsonFileReader")
 //    @Qualifier("csvFileReader")
-    @Qualifier("excelFileReader")
+//    @Qualifier("excelFileReader")
     @Autowired
     private IFileReader fileReader;
 
     @Override
     public void run(String... args) throws Exception {
         System.out.println("Doc du lieu tu file");
-//        BookDB.books = fileReader.readFile("book.json");
+        BookDB.books = fileReader.readFile("book.json");
 //        BookDB.books = fileReader.readFile("book.csv");
-        BookDB.books = fileReader.readFile("book.xlsx");
+//        BookDB.books = fileReader.readFile("book.xlsx");
         System.out.println("Tong so book = " +BookDB.books.size());
     }
 }

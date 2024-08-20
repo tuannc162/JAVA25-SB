@@ -5,26 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="361530e2-0167-4f1f-a514-746544176641" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../demoSteamAPI/src/main/java/com/example/demoSteamAPI/Calculator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../demoSteamAPI/src/main/java/com/example/demoSteamAPI/Greeting.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../demoSteamAPI/src/main/java/com/example/demoSteamAPI/VietNam.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demoThymeleaf/src/main/java/com/example/demoThymeleaf/controller/BookController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demoThymeleaf/src/main/java/com/example/demoThymeleaf/model/Book.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demoThymeleaf/src/main/resources/static/css/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demoThymeleaf/src/main/resources/static/js/main.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demoThymeleaf/src/main/resources/templates/admin/blog.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demoThymeleaf/src/main/resources/templates/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../homeworkDay12/src/main/java/com/example/homeworkDay12/controller/BookController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../homeworkDay12/src/main/java/com/example/homeworkDay12/dao/BookDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../homeworkDay12/src/main/java/com/example/homeworkDay12/dao/ipml/BookDAOImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../homeworkDay12/src/main/java/com/example/homeworkDay12/database/BookDB.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../homeworkDay12/src/main/java/com/example/homeworkDay12/model/Book.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../homeworkDay12/src/main/java/com/example/homeworkDay12/service/BookService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../homeworkDay12/src/main/java/com/example/homeworkDay12/service/ipml/BookServiceIpml.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../day_11/demoapp/src/main/java/com/example/demoapp/DemoappApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../day_11/demoapp/src/main/java/com/example/demoapp/DemoappApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../day_11/demoapp/src/main/java/com/example/demoapp/controller/BookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../day_11/demoapp/src/main/java/com/example/demoapp/controller/BookController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../day_11/demoapp/src/main/java/com/example/demoapp/dao/BookDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../day_11/demoapp/src/main/java/com/example/demoapp/dao/BookDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../day_11/demoapp/src/main/java/com/example/demoapp/database/BookDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../day_11/demoapp/src/main/java/com/example/demoapp/database/BookDB.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../exam/src/main/java/com/example/exam/controller/ProductsController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../exam/src/main/java/com/example/exam/dao/ProductsDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../exam/src/main/java/com/example/exam/dao/ipml/ProductsDAOImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../exam/src/main/java/com/example/exam/database/InitDB.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../exam/src/main/java/com/example/exam/database/ProductsDB.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../exam/src/main/java/com/example/exam/model/Products.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../exam/src/main/java/com/example/exam/service/ProductsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../exam/src/main/java/com/example/exam/service/impl/ProductsServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../exam/src/main/java/com/example/exam/utils/IFileReader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../exam/src/main/java/com/example/exam/utils/JsonFileReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../day_11/demoapp/src/main/java/com/example/demoapp/dao/ipml/BookDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../day_11/demoapp/src/main/java/com/example/demoapp/dao/ipml/BookDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../day_11/demoapp/src/main/java/com/example/demoapp/database/InitDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../day_11/demoapp/src/main/java/com/example/demoapp/database/InitDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../day_11/demoapp/src/main/java/com/example/demoapp/service/BookService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../day_11/demoapp/src/main/java/com/example/demoapp/service/BookService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../day_11/demoapp/src/main/java/com/example/demoapp/service/impl/BookServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../day_11/demoapp/src/main/java/com/example/demoapp/service/impl/BookServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,6 +92,7 @@
       <updated>1723642375008</updated>
       <workItem from="1723642376216" duration="2287000" />
       <workItem from="1723772743116" duration="49000" />
+      <workItem from="1724071761474" duration="18000" />
     </task>
     <servers />
   </component>

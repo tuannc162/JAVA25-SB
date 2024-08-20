@@ -1,31 +1,29 @@
-package com.example.demoapp.utils;
+package com.example.kiemtra.utils;
 
-import com.example.demoapp.model.Book;
+import com.example.kiemtra.model.Products;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
-@Component //jackson || gson -> them vao pom.xml
+@Component
 public class JsonFileReader implements IFileReader {
     @Override
-    public List<Book> readFile(String path) {
+    public List<Products> readFile(String path) {
         ObjectMapper objectMapper = new ObjectMapper();
-        List<Book> books = new ArrayList<>();
-
+        List<Products> product = null;
         try {
-            books = objectMapper.readValue(
+            product = objectMapper.readValue(
                     new File(path),
-                    new TypeReference<List<Book>>() {
+                    new TypeReference<List<Products>>() {
                     }
             );
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return books;
+        return product;
     }
 }
