@@ -1,0 +1,77 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+/* Định dạng cho khung chứa chi tiết sản phẩm */
+.detail-container {
+    width: 80%;
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Định dạng cho thông tin chi tiết sản phẩm */
+.product-detail {
+    text-align: center;
+}
+
+/* Định dạng cho tiêu đề sản phẩm */
+.product-detail h3 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* Định dạng cho mô tả sản phẩm */
+.product-detail .description {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+/* Định dạng cho giá sản phẩm */
+.product-detail .price,
+.product-detail .price-discount {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Định dạng cho giá gốc */
+.product-detail .price {
+    color: #333;
+}
+
+/* Định dạng cho giá giảm */
+.product-detail .price-discount {
+    color: #e74c3c;
+}
+
+/* Định dạng cho đánh giá sản phẩm */
+.product-detail .rating {
+    font-size: 18px;
+    color: #f39c12;
+    margin-bottom: 20px;
+}
+
+/* Định dạng cho nút thêm vào giỏ hàng */
+.add-to-cart {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-to-cart:hover {
+    background-color: #0056b3;
+}

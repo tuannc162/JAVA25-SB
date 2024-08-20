@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <title th:text="${product == null ? 'Product Not Found' : product.getName()}">Sản Phẩm Chi Tiết</title>
 
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/styleProductDetail.css}">
 
 </head>
 <body>
 <div class="detail-container">
     <div class="product-detail">
-        <h3 th:text="${product.getName()}">Product Name</h3>
-        <p class="description" th:text="${product.getDescription()}">Product Description</p>
-        <p class="price" th:text="${product.getPrice()}">$ Price</p>
-        <p class="price-discount" th:text="${product.getPriceDiscount()}">$ Discount Price</p>
-        <p class="rating" th:text="${product.getRating()}">Rating</p>
+        <h3 th:text=" 'Tên sản phẩm: ' +  ${product.getName()}">Product Name</h3>
+        <p class="description" th:text=" 'Mô tả: ' + ${product.getDescription()}">Product Description</p>
+        <p class="price" th:text=" 'Giá tiền: ' + ${product.getPrice()} + '$' ">$ Price</p>
+        <p class="price-discount" th:text=" 'Giảm giá: ' + ${product.getPriceDiscount()} + '%' ">$ Discount Price</p>
+        <p class="rating" th:text=" 'Đánh giá: ' + ${product.getRating()} + ' ★' ">Rating</p>
         <button class="add-to-cart">BUY</button>
     </div>
 </div>

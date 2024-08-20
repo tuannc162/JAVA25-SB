@@ -49,7 +49,7 @@ public class ProductsController {
                 .build();
 
         model.addAttribute("pageResponse", pageResponse);
-        model.addAttribute("products", pageResponse.getContent());
+        //model.addAttribute("products", pageResponse.getContent());
         return "index";
     }
 
