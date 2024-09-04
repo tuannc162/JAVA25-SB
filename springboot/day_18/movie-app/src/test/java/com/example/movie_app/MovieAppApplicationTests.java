@@ -1,13 +1,20 @@
 package com.example.movie_app;
 
+import com.example.movie_app.entity.Blog;
 import com.example.movie_app.entity.Movie;
 import com.example.movie_app.model.enums.MovieType;
+import com.example.movie_app.repository.BlogRepository;
 import com.example.movie_app.repository.MovieRepository;
+import com.example.movie_app.service.BlogService;
 import com.github.javafaker.Faker;
 import com.github.slugify.Slugify;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,7 +25,6 @@ import java.util.Random;
 class MovieAppApplicationTests {
 	@Autowired
 	private MovieRepository movieRepository;
-
 
 	@Test
 	void save_movies() {
@@ -72,11 +78,45 @@ class MovieAppApplicationTests {
 
 	@Test
 	public void testMethodQuery() {
-		long countPhimBo = movieRepository.countByType(MovieType.PHIM_BO);
-		System.out.println("Phim bo: " + countPhimBo);
+//		long countPhimBo = movieRepository.countByType(MovieType.PHIM_BO);
+//		System.out.println("Phim bo: " + countPhimBo);
+//
+//		List<Movie> films = movieRepository.findTop5ByTypeAndStatusOrderByCreatedAtDescRatingAsc(MovieType.PHIM_LE, true);
+//		System.out.println("Films: " + films);
+//
+//		List<Movie> movies = movieRepository.findByStatus(true, Sort.by("name", "releaseYear").descending());
+//		movies.forEach(System.out::println);
 
-		List<Movie> films = movieRepository.findTop5ByTypeAndStatusOrderByCreatedAtDescRatingAsc(MovieType.PHIM_LE, true);
-		System.out.println("Films: " + films);
+		Pageable pageable = PageRequest.of(0, 10);
+		Page<Movie> pageData = movieRepository.findByStatus(true, pageable);
+		System.out.println("Total page: " + pageData.getTotalPages());
+		System.out.println("Total element: " + pageData.getTotalElements());
+		System.out.println("Is First: " + pageData.isFirst());
+
+		pageData.getContent().forEach(System.out::println);
+
+	}
+
+	@Autowired
+	private BlogRepository blogRepository;
+
+	@Test
+	void saveBlogs() {
+		Faker faker = new Faker();
+
+		for (int i = 0; i < 10; i++) {
+			Blog blog = Blog.builder()
+					.name(faker.lorem().sentence(3))
+					.description(faker.lorem().paragraph(1))
+					.content(faker.lorem().paragraph(10))
+					.thumbnail("https://placehold.co/600x400?text=Blog" + i)
+					.status(true)
+					.createdAt(LocalDateTime.now())
+					.updatedAt(LocalDateTime.now())
+					.publishedAt(LocalDateTime.now())
+					.build();
+			blogRepository.save(blog);
+		}
 	}
 
 }
