@@ -19,4 +19,8 @@ public class BlogService {
         return blogRepository.findByStatus(status, pageable);
     }
 
+    public Blog getBlogDetails (Integer id, String slug) {
+        return blogRepository.findByIdAndSlugAndStatus(id, slug, true).orElse(null);
+    }
+
 }

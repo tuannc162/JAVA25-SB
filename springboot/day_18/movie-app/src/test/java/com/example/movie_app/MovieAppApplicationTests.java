@@ -103,10 +103,14 @@ class MovieAppApplicationTests {
 	@Test
 	void saveBlogs() {
 		Faker faker = new Faker();
+		Slugify slugify = Slugify.builder().build();
 
 		for (int i = 0; i < 10; i++) {
+
+			String name = faker.name().fullName();
 			Blog blog = Blog.builder()
 					.name(faker.lorem().sentence(3))
+					.slug(slugify.slugify(name))
 					.description(faker.lorem().paragraph(1))
 					.content(faker.lorem().paragraph(10))
 					.thumbnail("https://placehold.co/600x400?text=Blog" + i)

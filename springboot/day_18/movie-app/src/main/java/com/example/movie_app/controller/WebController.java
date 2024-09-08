@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -69,6 +70,44 @@ public class WebController {
         model.addAttribute("pageData",pageData);
         model.addAttribute("currentPage",page);
         return "web/phim-chieu-rap";
+    }
+
+
+
+
+
+
+    @GetMapping("/phim/{id}/{slug}")
+    public String getMovieDetailPage(Model model,
+                                    @PathVariable String slug,
+                                    @PathVariable Integer id) {
+        Movie movie = movieService.getMovieDetails(id, slug);
+
+        List<Movie> recommendMovies = movieService.getMovieRecommended(movie.getType(),movie.getId(), true, 1, 6);
+
+        model.addAttribute("recommendMovies", recommendMovies);
+        model.addAttribute("movie", movie);
+        return "web/chi-tiet-phim";
+    }
+
+    @GetMapping("/tin-tuc")
+    public String getBlogPage(Model model,
+                                      @RequestParam(required = false, defaultValue = "1") int page,
+                                      @RequestParam(required = false, defaultValue = "4") int pageSize) {
+        Page<Blog> pageData = blogService.getBlogsByStatus(true, page, pageSize);
+
+        model.addAttribute("pageData",pageData);
+        model.addAttribute("currentPage",page);
+        return "web/tin-tuc";
+    }
+
+    @GetMapping("/tin-tuc/{id}/{slug}")
+    public String getBlogDetailPage(Model model,
+                              @PathVariable String slug,
+                              @PathVariable Integer id) {
+        Blog blog = blogService.getBlogDetails(id, slug);
+        model.addAttribute("blog", blog);
+        return "web/chi-tiet-tin-tuc";
     }
 
 }

@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danh sách phim lẻ</title>
+    <title>Title</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
     <link rel="stylesheet" th:href="@{/web-assets/css/style.css}">
+
 </head>
 <body>
 <header class="bg-dark">
@@ -40,40 +40,19 @@
     </nav>
 </header>
 
-
 <section class="py-4">
     <div class="container">
-        <h3>Phim lẻ mới cập nhật</h3>
-
         <div class="row">
-            <div class="col-2" th:each="movie : ${pageData.getContent()}">
-                <a th:href="|/phim/${movie.id}/${movie.slug}|" class="movie-item text-black text-decoration-none">
-                    <div class="movie-poster rounded overflow-hidden">
-                        <img th:src="${movie.poster}" th:alt="${movie.name}">
-                    </div>
-                    <div class="movie-info">
-                        <p class="mt-2" th:text="${movie.name}">Lọ lem 2 giờ sáng</p>
-                    </div>
-                </a>
-            </div>
-        </div>
+            <div class="col-md-8">
+                <div class="mb-4">
+                    <img th:src="${blog.thumbnail}" class="img-fluid rounded mb-3" alt="Blog image">
+                    <h1 th:text="${blog.name}" class="mb-3">Top 10 Bộ Phim Hoa Ngữ Sắp Chiếu Năm 2024</h1>
+                    <p th:text="${#temporals.format(blog.createdAt, 'dd/MM/yyyy')}" class="text-muted mb-4">Đăng ngày: 01/01/2024</p>
 
-        <div class="d-flex justify-content-center" th:if="${pageData.getTotalPages() > 1}">
-            <nav aria-label="...">
-                <ul class="pagination">
-                    <li class="page-item" th:classappend="${currentPage == 1 ? 'disabled' : ''}">
-                        <a class="page-link" th:href="|/phim-le?page=${currentPage - 1}|">Trang trước</a>
-                    </li>
-                    <li class="page-item"
-                        th:classappend="${currentPage == number ? 'active' : ''}"
-                        th:each="number : ${#numbers.sequence(1, pageData.getTotalPages())}">
-                        <a class="page-link" th:href="|/phim-le?page=${number}|" th:text="${number}">1</a>
-                    </li>
-                    <li class="page-item" th:classappend="${currentPage == pageData.getTotalPages() ? 'disabled' : ''}">
-                        <a class="page-link" th:href="|/phim-le?page=${currentPage + 1}|">Trang sau</a>
-                    </li>
-                </ul>
-            </nav>
+                    <p th:text="${blog.description}">
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -130,10 +109,6 @@
         </div>
     </div>
 </footer>
-
-
-
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

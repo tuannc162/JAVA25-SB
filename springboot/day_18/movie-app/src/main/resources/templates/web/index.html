@@ -51,6 +51,7 @@
                     <a class="nav-link text-white" href="/phim-chieu-rap">Phim chiếu rạp</a>
                     <a class="nav-link text-white" >Quốc gia</a>
                     <a class="nav-link text-white" >Thể loại</a>
+                    <a class="nav-link text-white" href="/tin-tuc" >Blog</a>
                 </div>
 
                 <div>
@@ -149,14 +150,15 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center">
             <h3>Tin tức</h3>
-            <a href="/blog" class="text-decoration-none">Xem thêm</a>
+            <a href="/tin-tuc" class="text-decoration-none">Xem thêm</a>
         </div>
 
         <div class="row">
             <div class="col-6" th:each="blog : ${listBlog}">
-                <a th:href="|/blog/${blog.id}|" class="blog-text text-decoration-none">
-                    <div class="card mb-4">
-                        <h5 class="card-title mb-3" th:text="${blog.name}">Tiêu đề bài viết 1</h5>
+                <a th:href="|/tin-tuc/${blog.id}/${blog.slug}|" class="blog-text text-decoration-none">
+                    <div class="card mb-3">
+                        <h5 class="card-title mb-2" th:text="${blog.name}">Tiêu đề bài viết 1</h5>
+<!--                        <p th:text="${blog.createdAt}"></p>-->
                         <p class="card-text" th:text="${blog.description}"></p>
                     </div>
                 </a>

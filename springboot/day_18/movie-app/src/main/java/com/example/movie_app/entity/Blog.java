@@ -26,6 +26,9 @@ public class Blog {
     @Column(columnDefinition = "TEXT", nullable = false)
     String description;
 
+    @Column(unique = true, nullable = false)
+    String slug;
+
     @Column(columnDefinition = "TEXT")
     String content;
 

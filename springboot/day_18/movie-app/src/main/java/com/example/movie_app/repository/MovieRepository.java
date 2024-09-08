@@ -1,5 +1,6 @@
 package com.example.movie_app.repository;
 
+import com.example.movie_app.entity.Blog;
 import com.example.movie_app.entity.Movie;
 import com.example.movie_app.model.enums.MovieType;
 import org.springframework.data.domain.Page;
@@ -8,6 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface MovieRepository extends JpaRepository<Movie,Integer> {
@@ -39,5 +41,25 @@ public interface MovieRepository extends JpaRepository<Movie,Integer> {
 
 
     List<Movie> findTop4ByStatusOrderByRatingDesc(Boolean status, Pageable pageable);
+
+    Optional<Movie> findByIdAndSlugAndStatus(Integer id, String slug, Boolean status);
+
+    // Phim đề xuất:
+    // Những bộ phim cùng loại (phim lẻ, phim chiếu rạp,...) -> type
+    // Không chứa phim đang xem chi tiết -> id
+    // Là các phim có status = true, rating giảm dần -> status, rating
+    // Lấy 6 bản ghi -> top6
+
+
+    // C1: Viết method trực tiếp trong Repo để lấy giá trị
+    Page<Movie> findTop6ByTypeAndIdNotAndStatusOrderByRatingDesc(MovieType type, Integer id, Boolean status, Pageable pageable);
+
+
+    // C2: Lấy danh sách -> sử dụng stream API để lọc theo yêu cầu. Lấy danh sách (tất cả phim, danh sách phim bộ, danh sách phim có status = true)
+
+
+
+
+
 
 }

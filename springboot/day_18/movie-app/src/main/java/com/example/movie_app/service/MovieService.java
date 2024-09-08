@@ -1,5 +1,6 @@
 package com.example.movie_app.service;
 
+import com.example.movie_app.entity.Blog;
 import com.example.movie_app.entity.Movie;
 import com.example.movie_app.model.enums.MovieType;
 import com.example.movie_app.repository.MovieRepository;
@@ -26,5 +27,14 @@ public class MovieService {
     public List<Movie> getTopHotMovies(Boolean status, int page, int pageSize) {
         Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by("rating").descending());
         return movieRepository.findTop4ByStatusOrderByRatingDesc(status, pageable);
+    }
+
+    public Movie getMovieDetails (Integer id, String slug) {
+        return movieRepository.findByIdAndSlugAndStatus(id, slug, true).orElse(null);
+    }
+
+    public List<Movie> getMovieRecommended (MovieType type, Integer id, Boolean status, int page, int pageSize) {
+        Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by("rating").descending());
+        return movieRepository.findTop6ByTypeAndIdNotAndStatusOrderByRatingDesc(type, id, status, pageable).getContent();
     }
 }
