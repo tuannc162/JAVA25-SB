@@ -40,18 +40,22 @@
     </nav>
 </header>
 
-<section class="py-4">
+<section>
     <div class="container">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="mb-4">
-                    <img th:src="${blog.thumbnail}" class="img-fluid rounded mb-3" alt="Blog image">
-                    <h1 th:text="${blog.name}" class="mb-3">Top 10 Bộ Phim Hoa Ngữ Sắp Chiếu Năm 2024</h1>
-                    <p th:text="${#temporals.format(blog.createdAt, 'dd/MM/yyyy')}" class="text-muted mb-4">Đăng ngày: 01/01/2024</p>
+        <div class="p-4 bg-white shadow-sm">
+            <div class="blog-detail-header border-bottom">
+                <h3 class="fs-2" th:text="${blog.title}">Tiêu đề bài viết</h3>
+                <p th:text="${#temporals.format(blog.createdAt, 'dd-MM-yyyy')}">27 tháng 08, 2024 - 77 lượt xem</p>
+            </div>
 
-                    <p th:text="${blog.description}">
-                    </p>
-                </div>
+            <div class="blog-detail-content">
+                <h4 class="mb-3 mt-3" th:text="${blog.title}">
+                    Tiêu đề bài viết
+                </h4>
+                <img th:src="${blog.thumbnail}" alt="" />
+                <p th:text="${blog.content}">
+                    Nội dung bài viết
+                </p>
             </div>
         </div>
     </div>

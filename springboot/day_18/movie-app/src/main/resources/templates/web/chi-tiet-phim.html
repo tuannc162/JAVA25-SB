@@ -104,7 +104,11 @@
                 <div class="p-3 bg-body-tertiary">
                     <div class="row">
                         <div class="col-2"><p>Thể loại</p></div>
-                        <div class="col-10"><p><span>Hài, </span><span>Hành động, </span><span>Viễn tưởng</span></p>
+                        <div class="col-10">
+                            <th:block th:each="genres, iterStat : ${movie.genres}">
+                                <span th:text="${genres.name}"></span>
+                                <span th:if="${!iterStat.last}">, </span>
+                            </th:block>
                         </div>
                     </div>
                     <div class="row">
@@ -113,17 +117,29 @@
                     </div>
                     <div class="row">
                         <div class="col-2"><p>Quốc gia</p></div>
-                        <div class="col-10"><p>Nhật Bản</p></div>
+                        <div class="col-10">
+                            <p>
+                                <span th:each="country : ${movie.country}" th:text="${country.name}">Mỹ</span>
+                            </p>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-2"><p>Đạo diễn</p></div>
-                        <div class="col-10"><p><span>James Marsden</span></p></div>
+                        <div class="col-10">
+                            <th:block th:each="director, iterStat : ${movie.directors}">
+                                <span th:text="${director.name}"></span>
+                                <span th:if="${!iterStat.last}">, </span>
+                            </th:block>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-2"><p>Diễn viên</p></div>
-                        <div class="col-10"><p>
-                            <span>Ben Schwartz, </span><span>Jim Carrey, </span><span>Idris Elba, </span><span>Colleen O'Shaughnessey</span>
-                        </p></div>
+                        <div class="col-10">
+                            <th:block th:each="actor, iterStat : ${movie.actors}">
+                                <span th:text="${actor.name}"></span>
+                                <span th:if="${!iterStat.last}">, </span>
+                            </th:block>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-2"><p>Nội dung phim</p></div>
@@ -148,14 +164,15 @@
             </div>
         </div>
 
-        <div class="mt-4"><h4 class="mb-3">Tập phim</h4><a class="btn btn-dark me-2" href="/xem-phim/117/bo-cu?tap=1">Tập
-            1</a><a class="btn btn-dark me-2" href="/xem-phim/117/bo-cu?tap=2">Tập 2</a><a class="btn btn-dark me-2"
-                                                                                           href="/xem-phim/117/bo-cu?tap=3">Tập
-            3</a><a class="btn btn-dark me-2" href="/xem-phim/117/bo-cu?tap=4">Tập 4</a><a class="btn btn-dark me-2"
-                                                                                           href="/xem-phim/117/bo-cu?tap=5">Tập
-            5</a><a class="btn btn-dark me-2" href="/xem-phim/117/bo-cu?tap=6">Tập 6</a><a class="btn btn-dark me-2"
-                                                                                           href="/xem-phim/117/bo-cu?tap=7">Tập
-            7</a></div>
+        <div class="mt-4">
+            <h4 class="mb-3">Tập phim</h4>
+               <th:block th:each="episode : ${episodes}">
+                    <a class="btn btn-dark me-2"
+                            th:href="|/phim/${movieId}/${movie.id}/${episode.id}|"
+                       th:text="'Tập ' + ${episode.displayOrder}"></a>
+               </th:block>
+         </div>
+        </div>
     </div>
 </section>
 
@@ -177,6 +194,40 @@
     </div>
 </section>
 
+<!--<section class="py-4 bg-body-tertiary">-->
+<!--    <div class="container">-->
+<!--        <h3>Bình luận</h3>-->
+<!--        <div>-->
+<!--            <span>Vui lòng</span>-->
+<!--            <a href="">đăng nhập</a>-->
+<!--            <span>để viết bình luận</span>-->
+<!--        </div>-->
+<!--        <div class="row py-3">-->
+<!--            <div class="col-1 d-flex flex-column justify-content-between">-->
+<!--                <th:block th:each="user : ${users}">-->
+<!--                    <div class="ava rounded-circle bg-body-secondary d-flex">-->
+<!--                        <span th:text="${user.name}"></span>-->
+<!--                    </div>-->
+<!--                </th:block>-->
+<!--            </div>-->
+
+<!--            <div class="col">-->
+<!--                <th:block th:each="review : ${reviews}">-->
+<!--                    <div>-->
+<!--                        <span class="fw-bold" th:text="${review.user.name}"></span>-->
+<!--                        <span class="fw-light" th:text="${#dates.format(review.createdAt, 'dd/MM/yyyy')}"></span>-->
+<!--                        <div>-->
+<!--                            <i class="fas fa-star" style="color: #FFD43B;"></i>-->
+<!--                            <span th:text="${review.rating} + '/10 ' + ${review.ratingDescription}"></span>-->
+<!--                        </div>-->
+<!--                        <span class="text-black fw-light" th:text="${review.content}"></span>-->
+<!--                    </div>-->
+<!--                </th:block>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</section>-->
+
 <section class="py-4 bg-body-tertiary">
     <div class="container">
         <h3>Bình luận</h3>
@@ -185,75 +236,33 @@
             <a href="">đăng nhập</a>
             <span>để viết bình luận</span>
         </div>
-        <div class="row py-3">
-            <div class="col-1 d-flex flex-column justify-content-between">
-                <div class="ava rounded-circle bg-body-secondary d-flex ">
-                    <span>D</span>
+
+        <th:block th:each="review : ${reviews}">
+            <div class="row py-3">
+                <div class="col-1 d-flex flex-column align-items-center justify-content-between">
+                        <div class="ava" style="margin-bottom: 20px;">
+                            <img class="ava rounded-circle" th:src="${review.getUser().getAvatar()}">
+                        </div>
                 </div>
-                <div class="ava rounded-circle bg-body-secondary d-flex ">
-                    <span>H</span>
-                </div>
-                <div class="ava rounded-circle bg-body-secondary d-flex ">
-                    <span>H</span>
-                </div>
-                <div class="ava rounded-circle bg-body-secondary d-flex ">
-                    <span>V</span>
-                </div>
-                <div class="ava rounded-circle bg-body-secondary d-flex ">
-                    <span>V</span>
+
+                <div class="col">
+                    <div>
+                        <span class="fw-bold" th:text="${review.getUser().name}">Lê Hải Dũng</span>
+                        <span class="fw-light" th:text="${#temporals.format(review.createdAt, 'dd-MM-yyyy')}">20/02/2022</span>
+                        <div>
+                            <span th:text="${review.getRating()}"></span>
+                            <i class="fas fa-star" style="color: #FFD43B;"></i>
+                            <span th:if="${review.getRating() >= 8}">Cũng hay đấy</span>
+                            <span th:if="${review.getRating() >= 6 && review.getRating()<8}">Bình thường thôi</span>
+                            <span th:if="${review.getRating() < 6}">Quá tệ</span>
+
+                        </div>
+                        <span class="text-black fw-light" th:text="${review.getContent()}">Nhạt như nước ốc</span>
+                    </div>
                 </div>
             </div>
+        </th:block>
 
-
-            <div class="col">
-                <div>
-                    <span class="fw-bold">Lê Hải Dũng</span>
-                    <span class="fw-light">20/02/2022</span>
-                    <div>
-                        <i class="fas fa-star" style="color: #FFD43B;"></i>
-                        <span>10/10 Xuất sắc</span>
-                    </div>
-                    <span class="text-black fw-light">Nhạt như nước ốc</span>
-                </div>
-                <div>
-                    <span class="fw-bold">Bùi Hiên 123</span>
-                    <span class="fw-light">19/02/2022</span>
-                    <div>
-                        <i class="fas fa-star" style="color: #FFD43B;"></i>
-                        <span>8/10 Rất tốtc</span>
-                    </div>
-                    <span class="text-black fw-light">Phim hay</span>
-                </div>
-                <div>
-                    <span class="fw-bold">Võ Văn Hưng</span>
-                    <span class="fw-light">14/02/2022</span>
-                    <div>
-                        <i class="fas fa-star" style="color: #FFD43B;"></i>
-                        <span>10/10 Xuất sắc</span>
-                    </div>
-                    <span class="text-black fw-light">Chán không tả nổi, xem buồn ngủ quá trừi</span>
-                </div>
-                <div>
-                    <span class="fw-bold">Phan Thị Vinh</span>
-                    <span class="fw-light">20/02/2022</span>
-                    <div>
-                        <i class="fas fa-star" style="color: #FFD43B;"></i>
-                        <span>10/10 Xuất sắc</span>
-                    </div>
-                    <span class="text-black fw-light">Hay, cảnh đẹp, diễn quá tốt</span>
-                </div>
-                <div>
-                    <span class="fw-bold">Ngô Quốc Hiếu</span>
-                    <span class="fw-light">11/02/2022</span>
-                    <div>
-                        <i class="fas fa-star" style="color: #FFD43B;"></i>
-                        <span>10/10 Xuất sắc</span>
-                    </div>
-                    <span class="text-black fw-light">Anh em Bắc Giang mãi đỉnh</span>
-                </div>
-
-            </div>
-        </div>
     </div>
 </section>
 

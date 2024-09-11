@@ -26,4 +26,12 @@ public class Review {
     Integer rating;
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "movie_id")
+    Movie movie;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    User user;
 }

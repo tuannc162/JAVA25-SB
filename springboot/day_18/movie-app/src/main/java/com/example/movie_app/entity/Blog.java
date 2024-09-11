@@ -21,7 +21,7 @@ public class Blog {
     Integer id;
 
     @Column(unique = true, nullable = false)
-    String name;
+    String title;
 
     @Column(columnDefinition = "TEXT", nullable = false)
     String description;
@@ -38,5 +38,9 @@ public class Blog {
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
     LocalDateTime publishedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    User user;
 
 }

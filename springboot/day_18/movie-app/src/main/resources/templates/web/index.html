@@ -146,21 +146,24 @@
     </div>
 </section>
 
-<section class="py-4 g-body-tertiary">
+<section class="py-4">
     <div class="container">
-        <div class="d-flex justify-content-between align-items-center">
-            <h3>Tin tức</h3>
-            <a href="/tin-tuc" class="text-decoration-none">Xem thêm</a>
+        <div class="mb-2 d-flex justify-content-between align-items-center">
+            <h3 class="mt-0">Tin tức</h3>
+            <a href="#">Xem thêm</a>
         </div>
-
         <div class="row">
-            <div class="col-6" th:each="blog : ${listBlog}">
-                <a th:href="|/tin-tuc/${blog.id}/${blog.slug}|" class="blog-text text-decoration-none">
-                    <div class="card mb-3">
-                        <h5 class="card-title mb-2" th:text="${blog.name}">Tiêu đề bài viết 1</h5>
-<!--                        <p th:text="${blog.createdAt}"></p>-->
-                        <p class="card-text" th:text="${blog.description}"></p>
-                    </div>
+            <div class="col-6 mb-4" th:each="blog : ${listBlog}">
+                <a class="movie-item text-black p-4 d-block bg-body-tertiary rounded"
+                   th:href="|/tin-tuc/${blog.id}/${blog.slug}|">
+                    <h5 th:text="${blog.title}">Những bộ phim đỉnh cao</h5>
+                    <p th:text="${#temporals.format(blog.publishedAt, 'dd-MM-yyyy')}">28/06/2024</p>
+                    <p class="mb-0" th:text="${blog.description}">
+                        Phim Thám Tử Lừng Danh Conan bắt đầu với câu chuyện về Shinichi
+                        Kudo, một học sinh trung học tài năng và là một thám tử học
+                        đường. Sau khi bị biến thành cậu bé Conan Edogawa, Shinichi tiếp
+                        tục phá án dưới danh nghĩa của Conan.
+                    </p>
                 </a>
             </div>
         </div>

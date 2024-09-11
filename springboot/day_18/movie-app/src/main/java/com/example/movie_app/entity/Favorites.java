@@ -20,4 +20,12 @@ public class Favorites {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
     LocalDateTime createdAt;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    User user;
+
+    @ManyToOne
+    @JoinColumn(name = "movie_id")
+    Movie movie;
 }

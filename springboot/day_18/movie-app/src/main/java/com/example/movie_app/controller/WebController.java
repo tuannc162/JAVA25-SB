@@ -1,10 +1,8 @@
 package com.example.movie_app.controller;
 
-import com.example.movie_app.entity.Blog;
-import com.example.movie_app.entity.Movie;
+import com.example.movie_app.entity.*;
 import com.example.movie_app.model.enums.MovieType;
-import com.example.movie_app.service.BlogService;
-import com.example.movie_app.service.MovieService;
+import com.example.movie_app.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -20,6 +18,9 @@ import java.util.List;
 public class WebController {
     private final MovieService movieService;
     private final BlogService blogService;
+    private final EpisodeService episodeService;
+    private final ReviewService reviewService;
+
 
     @GetMapping("/")
     public String getHomePage(Model model) {
@@ -82,6 +83,12 @@ public class WebController {
                                     @PathVariable String slug,
                                     @PathVariable Integer id) {
         Movie movie = movieService.getMovieDetails(id, slug);
+
+        List<Episode> episodes = episodeService.getEpisodesByMovieId(movie.getId());
+        model.addAttribute("episodes", episodes);
+
+        List<Review> reviews = reviewService.getReviewsByMovieIdSortedByCreatedAtDesc(movie.getId());
+        model.addAttribute("reviews", reviews);
 
         List<Movie> recommendMovies = movieService.getMovieRecommended(movie.getType(),movie.getId(), true, 1, 6);
 
