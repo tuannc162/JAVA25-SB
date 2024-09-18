@@ -4,7 +4,6 @@ import com.example.movie_app.entity.*;
 import com.example.movie_app.model.enums.MovieType;
 import com.example.movie_app.model.enums.UserRole;
 import com.example.movie_app.repository.*;
-import com.example.movie_app.service.BlogService;
 import com.github.javafaker.Faker;
 import com.github.slugify.Slugify;
 import org.junit.jupiter.api.Test;
@@ -13,12 +12,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Random;
 
 @SpringBootTest

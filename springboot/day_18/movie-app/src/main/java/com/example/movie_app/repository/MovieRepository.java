@@ -1,6 +1,5 @@
 package com.example.movie_app.repository;
 
-import com.example.movie_app.entity.Blog;
 import com.example.movie_app.entity.Movie;
 import com.example.movie_app.model.enums.MovieType;
 import org.springframework.data.domain.Page;

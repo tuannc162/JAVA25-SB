@@ -40,35 +40,51 @@
     </nav>
 </header>
 
+
 <section class="py-4">
     <div class="container">
         <h1 class="mb-4">Blog</h1>
         <div class="row">
-            <div class="col-3" th:each="blog : ${pageData.getContent()}">
-                <img th:src="${blog.thumbnail}" class="img-fluid rounded mb-3" th:alt="${blog.name}">
-                <h5><a th:href="|/tin-tuc/${blog.id}/${blog.slug}|" class="text-dark text-decoration-none">Top 10 Bộ Phim Hoa Ngữ Sắp Chiếu Năm 2024</a></h5>
-                <p th:text="${#temporals.format(blog.createdAt, 'dd/MM/yyyy')}" class="text-muted">Đăng ngày: 01/01/2024</p>
-                <p th:text="${blog.description}">Dù chưa ra mắt nhưng năm 2024 hứa hẹn sẽ có nhiều phim cổ trang bom tấn làm cho mọt phim đón đợi. Cùng Motchill điểm danh Top 10 Phim Cổ Trang Trung Quốc Sắp Ra Mắt Năm 2024 bên dưới nhé.</p>
+            <!-- Blog Item -->
+            <div class="col-md-4 col-lg-3 mb-4" th:each="blog : ${pageData}">
+                <a class="blog-item text-decoration-none text-dark d-block rounded shadow-sm" th:href="|/tin-tuc/${blog.id}/${blog.slug}|">
+                    <div class="blog-poster rounded overflow-hidden">
+                        <img style="width: 100%"
+                                th:src="${blog.thumbnail}"
+                                th:alt="${blog.title}"
+                                class="img-fluid" />
+                    </div>
+                    <div class="blog-footer d-flex justify-content-between py-3 border-top">
+                        <div th:text="${#temporals.format(blog.createdAt, 'dd-MM-yyyy')}">04-09-2024</div>
+                    </div>
+                    <div class="blog-info px-2 py-3">
+                        <h5 class="text-center fw-bold" th:text="${blog.title}">Mad Max: The Fury Road – Cái giá của sự tự do</h5>
+                        <p class="text-center mb-0" th:text="${#strings.substring(blog.description, 0, 50) + (blog.description.length() > 50 ? '...' : '')}">
+                            MadMax: The Fury Road là một bộ phim hay đến phát nghẹn. Không phải là phim hành động đầu tiên mà tôi phải căng não, căng mắt ra để xem từng phút kịch tính của phim,...
+                        </p>
+                    </div>
+                </a>
             </div>
         </div>
-    </div>
 
-    <div class="d-flex justify-content-center" th:if="${pageData.getTotalPages() > 1}">
-        <nav aria-label="...">
-            <ul class="pagination">
-                <li class="page-item" th:classappend="${currentPage == 1 ? 'disabled' : ''}">
-                    <a class="page-link" th:href="|/tin-tuc?page=${currentPage - 1}|">Trang trước</a>
-                </li>
-                <li class="page-item"
-                    th:classappend="${currentPage == number ? 'active' : ''}"
-                    th:each="number : ${#numbers.sequence(1, pageData.getTotalPages())}">
-                    <a class="page-link" th:href="|/tin-tuc?page=${number}|" th:text="${number}">1</a>
-                </li>
-                <li class="page-item" th:classappend="${currentPage == pageData.getTotalPages() ? 'disabled' : ''}">
-                    <a class="page-link" th:href="|/tin-tuc?page=${currentPage + 1}|">Trang sau</a>
-                </li>
-            </ul>
-        </nav>
+        <!-- Pagination -->
+        <div class="d-flex justify-content-center mt-4" th:if="${pageData.getTotalPages() > 1}">
+            <nav aria-label="Pagination">
+                <ul class="pagination">
+                    <li class="page-item" th:classappend="${currentPage == 1 ? 'disabled' : ''}">
+                        <a class="page-link" th:href="|/tin-tuc?page=${currentPage - 1}|">Trang trước</a>
+                    </li>
+                    <li class="page-item"
+                        th:classappend="${currentPage == number ? 'active' : ''}"
+                        th:each="number : ${#numbers.sequence(1, pageData.getTotalPages())}">
+                        <a class="page-link" th:href="|/tin-tuc?page=${number}|" th:text="${number}">1</a>
+                    </li>
+                    <li class="page-item" th:classappend="${currentPage == pageData.getTotalPages() ? 'disabled' : ''}">
+                        <a class="page-link" th:href="|/tin-tuc?page=${currentPage + 1}|">Trang sau</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </section>
 

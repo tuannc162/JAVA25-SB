@@ -1,6 +1,5 @@
 package com.example.movie_app.service;
 
-import com.example.movie_app.entity.Blog;
 import com.example.movie_app.entity.Movie;
 import com.example.movie_app.model.enums.MovieType;
 import com.example.movie_app.repository.MovieRepository;
