@@ -15,66 +15,6 @@
 
     <link rel="stylesheet" th:href="@{/web-assets/css/style.css}">
 
-
-    <style>
-        .movie-poster {
-            position: relative;
-        }
-
-        .play-icon {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 3rem;
-            color: white;
-            cursor: pointer;
-            z-index: 10;
-            transition: transform 0.3s ease, color 0.3s ease;
-        }
-
-        .play-icon:hover {
-            transform: translate(-50%, -50%) scale(1.2);
-            color: #ff0000;
-        }
-
-        textarea::placeholder {
-            color: #6c757d;
-            font-style: italic;
-        }
-
-        .modal-dialog {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 70%;
-        }
-
-        .modal-dialog.modal-lg {
-            max-width: 50%;
-        }
-
-        .modal-footer {
-            display: flex;
-            justify-content: center;
-        }
-
-        #completeReview {
-            width: 200px;
-            text-align: center;
-        }
-
-        /* Đặt màu xám cho các sao */
-        #rating .fa-star {
-            color: rgb(204, 204, 204); /* Màu xám */
-        }
-
-        /* Thay đổi màu sao khi di chuột qua */
-        #rating .fa-star:hover {
-            color: #FFD43B; /* Màu vàng khi di chuột qua */
-        }
-    </style>
-
 </head>
 <body>
 <header class="bg-dark">
@@ -405,90 +345,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const myModal = document.getElementById('modal-trailer');
-        const iframe = myModal.querySelector('iframe');
 
-        myModal.addEventListener('hide.bs.modal', function () {
-            const src = iframe.src;
-            iframe.src = '';
-            iframe.src = src;
-        });
-    });
+<script th:src="@{/web-assets/js/main.js}"></script>
 
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const stars = document.querySelectorAll('#rating i');
-        const ratingValue = document.getElementById('ratingValue');
-        const ratingDisplay = document.getElementById('ratingDisplay');
-
-        // Xử lý khi người dùng nhấp vào sao
-        stars.forEach(star => {
-            star.addEventListener('click', function() {
-                const rating = this.getAttribute('data-rating');
-                ratingValue.value = rating;
-                updateStarColors(rating);
-                updateRatingDisplay(rating);
-            });
-
-            // Xử lý khi di chuột qua sao
-            star.addEventListener('mouseover', function() {
-                const rating = this.getAttribute('data-rating');
-                updateStarColors(rating, true);
-            });
-
-            // Xử lý khi di chuột ra ngoài sao
-            star.addEventListener('mouseout', function() {
-                const rating = ratingValue.value;
-                updateStarColors(rating);
-            });
-        });
-
-        // Xử lý khi người dùng nhấp vào nút "Hoàn tất"
-        document.getElementById('completeReview').addEventListener('click', function() {
-            const rating = ratingValue.value;
-            const comment = document.getElementById('comment').value;
-
-            if (rating > 0 && comment.trim() !== '') {
-                console.log('Đánh giá:', rating);
-                console.log('Bình luận:', comment);
-
-                // Đóng modal sau khi gửi
-                var modal = bootstrap.Modal.getInstance(document.getElementById('reviewModal'));
-                modal.hide();
-            } else {
-                alert('Vui lòng chọn đánh giá và nhập bình luận.');
-            }
-        });
-
-        // Cập nhật màu sắc của các sao
-        function updateStarColors(rating, hover = false) {
-            stars.forEach(star => {
-                const starRating = parseInt(star.getAttribute('data-rating'));
-                if (hover) {
-                    // Nếu đang di chuột qua sao
-                    if (starRating <= rating) {
-                        star.style.color = '#FFD43B';
-                    } else {
-                        star.style.color = '#ccc';
-                    }
-                } else {
-                    // Nếu không di chuột qua sao
-                    if (starRating <= rating) {
-                        star.style.color = '#FFD43B';
-                    } else {
-                        star.style.color = '#ccc';
-                    }
-                }
-            });
-        }
-
-        // Cập nhật hiển thị đánh giá
-        function updateRatingDisplay(rating) {
-            ratingDisplay.textContent = `Bạn đã đánh giá ${rating}/10`;
-        }
-    });
-</script>
 </body>
 </html>
