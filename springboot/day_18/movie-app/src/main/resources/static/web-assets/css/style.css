@@ -874,16 +874,3 @@ strong {
     color: #EDBB0E;
 }
 
-.btn {
-    background: transparent;  /* Không có nền */
-    border: none;             /* Không có viền */
-    color: #007bff;           /* Màu chữ (thay đổi theo ý bạn) */
-    font-size: 16px;          /* Kích thước chữ */
-    cursor: pointer;          /* Con trỏ khi hover */
-    padding: 0;               /* Padding xung quanh */
-    text-decoration: underline; /* Gạch chân chữ (tuỳ chọn) */
-}
-
-.btn:hover {
-    color: #0056b3;           /* Màu chữ khi hover */
-}

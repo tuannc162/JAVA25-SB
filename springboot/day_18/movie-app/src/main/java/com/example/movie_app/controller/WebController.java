@@ -2,24 +2,29 @@ package com.example.movie_app.controller;
 
 import com.example.movie_app.entity.*;
 import com.example.movie_app.model.enums.MovieType;
+import com.example.movie_app.model.request.UpdatePasswordRequest;
+import com.example.movie_app.model.request.UpdateProfileUserRequest;
 import com.example.movie_app.service.*;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
-public class WebController {
+public class WebController<HttpServletResquest> {
     private final MovieService movieService;
     private final BlogService blogService;
     private final EpisodeService episodeService;
     private final ReviewService reviewService;
+    private final UserService userService;
 
 
     @GetMapping("/")
@@ -115,6 +120,109 @@ public class WebController {
         Blog blog = blogService.getBlogDetails(id, slug);
         model.addAttribute("blog", blog);
         return "web/chi-tiet-tin-tuc";
+    }
+
+    @GetMapping("/xem-phim/phim/{id}/{slug}")
+    public String getMovielWatchPage(Model model,
+                                     @PathVariable String slug,
+                                     @PathVariable Integer id,
+                                     @RequestParam String tap) {
+        Movie movie = movieService.getMovieDetails(id, slug);
+
+        List<Episode> episodes = episodeService.getEpisodesByMovieId(movie.getId());
+        model.addAttribute("episodes", episodes);
+
+        Episode currentEpisode = episodeService.getEpisodeByDisplayOrder(id, tap);
+        model.addAttribute("currentEpisode", currentEpisode);
+
+        List<Review> reviews = reviewService.getReviewsByMovieIdSortedByCreatedAtDesc(movie.getId());
+        model.addAttribute("reviews", reviews);
+
+        List<Movie> recommendMovies = movieService.getMovieRecommended(movie.getType(),movie.getId(), true, 1, 6);
+
+        model.addAttribute("recommendMovies", recommendMovies);
+        model.addAttribute("movie", movie);
+        return "web/xem-phim";
+    }
+
+    @GetMapping("/dang-nhap")
+    public String loginPage(HttpServletRequest request) {
+        User user = (User) request.getSession().getAttribute("currentUser");
+        if (user != null) {
+            return "redirect:/";
+        }
+        return "web/dang-nhap";
+    }
+
+    @GetMapping("/thong-tin-ca-nhan")
+    public String informationPage(Model model, HttpServletRequest request) {
+        User user = (User) request.getSession().getAttribute("currentUser");
+        if (user == null) {
+            return "redirect:/dang-nhap";
+        }
+        model.addAttribute("user", user);
+        return "web/thong-tin-ca-nhan";
+    }
+
+    @PutMapping("/api/users/update-profile")
+    public ResponseEntity<String> updateProfile(
+            HttpServletRequest request,
+            @RequestBody Map<String, String> requestBody) {
+
+        User currentUser = (User) request.getSession().getAttribute("currentUser");
+
+        if (currentUser == null) {
+            return ResponseEntity.status(401).body("Bạn cần đăng nhập để thực hiện hành động này.");
+        }
+
+        String name = requestBody.get("name");
+        if (name == null || name.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("Tên không được để trống");
+        }
+
+        userService.updateUserProfile(currentUser.getId(), name);
+        return ResponseEntity.ok("Chúc mừng bạn đã cập nhật thông tin thành công");
+    }
+
+    @PutMapping("/api/users/update-password")
+    public ResponseEntity<String> updatePassword(
+            HttpServletRequest request,
+            @RequestBody UpdatePasswordRequest updatePasswordRequest) {
+
+        User currentUser = (User) request.getSession().getAttribute("currentUser");
+
+        if (currentUser == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("Bạn cần đăng nhập để thực hiện hành động này.");
+        }
+
+        String oldPassword = updatePasswordRequest.getOldPassword();
+        String newPassword = updatePasswordRequest.getNewPassword();
+        String confirmPassword = updatePasswordRequest.getConfirmPassword();
+
+        if (oldPassword == null || oldPassword.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("Mật khẩu cũ không được để trống");
+        }
+
+        if (newPassword == null || newPassword.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("Mật khẩu mới không được để trống");
+        }
+
+        if (!newPassword.equals(confirmPassword)) {
+            return ResponseEntity.badRequest().body("Mật khẩu xác nhận không khớp với mật khẩu mới");
+        }
+
+        try {
+            // Kiểm tra mật khẩu cũ với mã hóa
+//            if (!userService.checkOldPassword(currentUser.getId(), oldPassword)) {
+//                return ResponseEntity.badRequest().body("Mật khẩu cũ không chính xác");
+//            }
+
+            userService.updateUserPassword(currentUser.getId(), oldPassword, newPassword);
+            return ResponseEntity.ok("Mật khẩu đã được đổi thành công");
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
 }

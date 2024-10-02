@@ -1,0 +1,5 @@
+# HTTrack Website Copier Cookie File
+# This file format is compatible with Netscape cookies
+bestwebsoft.com	TRUE	/	FALSE	1999999999	PHPSESSID	8f0decf4162d192a102fe6a1f655ef66
+bestwebsoft.com	TRUE	/	FALSE	1999999999	cntctfrm_send_mail	deleted
+

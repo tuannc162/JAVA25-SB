@@ -1,0 +1,20 @@
+HTTrack3.49-2+htsswf+htsjava launched on Wed, 25 Sep 2024 16:09:06 at https://demoxml.com/html/hotelbooking +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar
+(winhttrack -qwC2%Ps2u1%s%uN0%I0p3DaK0H0%kf2A25000%f#f -F "Mozilla/4.5 (compatible; HTTrack 3.0x; Windows 98)" -%F "<!-- Mirrored from %s%s by HTTrack Website Copier/3.x [XR&CO'2014], %s -->" -%l "en, *" https://demoxml.com/html/hotelbooking -O1 "C:\My Web Sites\HotelBooking" +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar )
+
+Information, Warnings and Errors reported for this mirror:
+note:	the hts-log.txt file, and hts-cache folder, may contain sensitive information,
+	such as username/password authentication for websites mirrored in this project
+	do not share these files/folders if you want these information to remain private
+
+16:10:07	Error: 	"Not Found" (404) at link https://demoxml.com/html/hotelbooking/fonts/glyphicons-halflings-regular.woff2 (from https://demoxml.com/html/hotelbooking/css/bootstrap.min.css)
+16:10:07	Error: 	"Not Found" (404) at link https://demoxml.com/html/hotelbooking/css/owl.video.play.png (from https://demoxml.com/html/hotelbooking/css/owl.carousel.css)
+16:10:07	Error: 	"Not Found" (404) at link https://demoxml.com/html/hotelbooking/css/images/gradient/g30.png (from https://demoxml.com/html/hotelbooking/css/rev-slider/settings.css)
+16:10:07	Error: 	"Not Found" (404) at link https://demoxml.com/html/hotelbooking/css/images/gradient/g40.png (from https://demoxml.com/html/hotelbooking/css/rev-slider/settings.css)
+16:10:07	Error: 	"Not Found" (404) at link https://demoxml.com/html/hotelbooking/css/assets/arrow_left3.png (from https://demoxml.com/html/hotelbooking/css/rev-slider/settings.css)
+16:10:07	Error: 	"Not Found" (404) at link https://demoxml.com/html/hotelbooking/css/font/revicons.eot?5510888 (from https://demoxml.com/html/hotelbooking/css/rev-slider/settings.css)
+16:10:07	Error: 	"Not Found" (404) at link https://demoxml.com/html/hotelbooking/css/font/revicons.woff?5510888 (from https://demoxml.com/html/hotelbooking/css/rev-slider/settings.css)
+16:10:07	Error: 	"Not Found" (404) at link https://demoxml.com/html/hotelbooking/css/font/revicons.ttf?5510888 (from https://demoxml.com/html/hotelbooking/css/rev-slider/settings.css)
+16:10:07	Error: 	"Not Found" (404) at link https://demoxml.com/html/hotelbooking/css/font/revicons.svg?5510888 (from https://demoxml.com/html/hotelbooking/css/rev-slider/settings.css)
+
+HTTrack Website Copier/3.49-2 mirror complete in 1 minutes 4 seconds : 214 links scanned, 204 files written (10484797 bytes overall) [9176840 bytes received at 143388 bytes/sec], 2304810 bytes transferred using HTTP compression in 51 files, ratio 23%, 23.8 requests per connection
+(9 errors, 0 warnings, 0 messages)
