@@ -260,6 +260,7 @@
     })
 </script>
 
+
 // update userName
 <script>
     const updateUserProfile = async () => {
@@ -293,52 +294,60 @@
 </script>
 
 
-// Update password
+// update password
 <script>
-    const updatePassword = async () => {
-        const oldPassword = document.getElementById('oldPassword').value.trim();
-        const newPassword = document.getElementById('newPassword').value.trim();
-        const confirmPassword = document.getElementById('confirmPassword').value.trim();
+    const oldPasswordEl = document.getElementById("oldPassword");
+    const newPasswordEl = document.getElementById("newPassword");
+    const confirmPasswordEl = document.getElementById("confirmPassword");
+    const btnUpdatePasswordEl = document.getElementById("btn-update-password");
 
-        // Kiểm tra đầu vào
-        if (oldPassword === "") {
-            toastr.warning("Vui lòng nhập mật khẩu cũ");
+
+    const modalPasswordObj = new bootstrap.Modal('#modalPassword', {
+        keyboard: false
+    })
+
+    btnUpdatePasswordEl.addEventListener("click", async () => {
+        if (oldPasswordEl.value === "") {
+            toastr.error("Mật khẩu cũ không được để trống");
             return;
         }
 
-        if (newPassword === "") {
-            toastr.warning("Vui lòng nhập mật khẩu mới");
+        if (newPasswordEl.value === "") {
+            toastr.error("Mật khẩu mới không được để trống");
             return;
         }
 
-        if (confirmPassword === "") {
-            toastr.warning("Vui lòng nhập mật khẩu xác nhận");
+        if (confirmPasswordEl.value === "") {
+            toastr.error("Mật khẩu xác nhận không được để trống");
             return;
         }
 
-        if (newPassword !== confirmPassword) {
-            toastr.warning("Mật khẩu xác nhận không khớp");
+        if (confirmPasswordEl.value !== newPasswordEl.value) {
+            toastr.error("Mật khẩu xác nhận không trùng khớp");
             return;
         }
 
-        const request = {
-            oldPassword: oldPassword,
-            newPassword: newPassword,
-            confirmPassword: confirmPassword
-        };
+        if (newPasswordEl.value === oldPasswordEl.value) {
+            toastr.error("Mật khẩu mới không được trùng với mật khẩu cũ");
+            return;
+        }
+
+        const data = {
+            oldPassword: oldPasswordEl.value,
+            newPassword: newPasswordEl.value,
+            confirmPassword: confirmPasswordEl.value,
+        }
 
         try {
-            let res = await axios.put('/api/users/update-password', request);
-            toastr.success(res.data);
-            document.getElementById('form-update-password').reset();
-        } catch (error) {
-            console.log(error);
-            toastr.error(error.response.data || "Đã có lỗi xảy ra");
+            let res = await axios.put("/api/users/update-password", data);
+            toastr.success("Bạn đã cập nhật mật khẩu thành công");
+            modalPasswordObj.hide();
+        } catch (e) {
+            console.log(e)
+            toastr.error(e.response.data.message);
         }
-    };
-    document.getElementById('btn-update-password').addEventListener('click', updatePassword);
+    });
 </script>
-
 
 <script>
     const formLoginEl = document.getElementById('form-login');

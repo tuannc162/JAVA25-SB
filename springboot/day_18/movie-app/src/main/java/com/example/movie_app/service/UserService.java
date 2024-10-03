@@ -1,7 +1,10 @@
 package com.example.movie_app.service;
 
 import com.example.movie_app.entity.User;
+import com.example.movie_app.model.request.UpdatePasswordRequest;
+import com.example.movie_app.model.request.UpdateProfileUserRequest;
 import com.example.movie_app.repository.UserRepository;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final HttpSession session;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -22,32 +26,45 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public void updateUserProfile(Integer userId, String name) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        user.setName(name);
-        userRepository.save(user);
-    }
+    public User updateProfile(UpdateProfileUserRequest request) {
+        User user = (User) session.getAttribute("currentUser");
 
-    public void updateUserPassword(Integer userId, String oldPassword, String newPassword) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-
-        // Kiểm tra mật khẩu cũ
-        if (!user.getPassword().equals(oldPassword)) {
-            throw new RuntimeException("Mật khẩu cũ không chính xác");
+        if (request.getName().isEmpty()) {
+            throw new RuntimeException("Can not name is empty");
         }
 
-        String encodedNewPassword = passwordEncoder.encode(newPassword);
-        user.setPassword(encodedNewPassword);
-        userRepository.save(user);
+        user.setName(request.getName());
+        return userRepository.save(user);
     }
 
-    public boolean checkOldPassword(Integer userId, String oldPassword) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+    public User updatePassword(UpdatePasswordRequest request) {
+        User user = (User) session.getAttribute("currentUser");
 
-        System.out.println("Mật khẩu cũ: " + oldPassword);
-        System.out.println("Mật khẩu đã mã hóa: " + user.getPassword());
+        if (request.getOldPassword().isEmpty()) {
+            throw new RuntimeException("Mật khẩu trống");
+        }
+        if (request.getNewPassword().isEmpty()) {
+            throw new RuntimeException("Mật khẩu trống\"");
+        }
+        if (request.getConfirmPassword().isEmpty()) {
+            throw new RuntimeException("Mật khẩu trống\"");
+        }
+        if (request.getOldPassword().equals(request.getNewPassword())) {
+            throw new RuntimeException("Mạt khẩu cũ trùng mật khẩu mới");
+        }
 
-        // So sánh mật khẩu cũ đã mã hóa với mật khẩu đã nhập
-        return passwordEncoder.matches(oldPassword, user.getPassword());
+        if (!request.getConfirmPassword().equals(request.getNewPassword())) {
+            throw new RuntimeException("Mật khẩu xác nhận không trùng với mật khẩu mới");
+        }
+
+        if (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
+            throw new RuntimeException("Mật khẩu cũ không đúng");
+        }
+
+        String encodePassword = passwordEncoder.encode(request.getConfirmPassword());
+
+        user.setPassword(encodePassword);
+        return userRepository.save(user);
+
     }
 }
