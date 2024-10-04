@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Đăng nhập</title>
+    <title>Đăng ký</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
           integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
@@ -72,8 +72,12 @@
 <section class="py-4">
     <div class="container">
         <div class="d-flex justify-content-center align-items-center flex-column">
-            <h3 class="mb-3">Đăng nhập</h3>
-            <form id="form-login" class="p-4 bg-body-tertiary">
+            <h3 class="mb-3">Đăng ký</h3>
+            <form id="form-register" class="p-4 bg-body-tertiary">
+                <div class="mb-3 form-group">
+                    <label for="name" class="form-label">Tên</label>
+                    <input type="text" class="form-control" id="name" name="name"/>
+                </div>
                 <div class="mb-3 form-group">
                     <label for="email" class="form-label">Email</label>
                     <input type="text" class="form-control" id="email" name="email"/>
@@ -82,8 +86,12 @@
                     <label for="password" class="form-label">Password</label>
                     <input type="password" class="form-control" id="password" name="password"/>
                 </div>
+                <div class="mb-3 form-group">
+                    <label for="password" class="form-label">Nhập lại password</label>
+                    <input type="password" class="form-control" id="re-enter-password" name="password"/>
+                </div>
                 <div class="mb-3">
-                    <button type="submit" class="btn btn-primary" id="btn-login">Đăng nhập</button>
+                    <button type="submit" class="btn btn-primary" id="btn-login">Đăng ký</button>
                 </div>
             </form>
         </div>
@@ -157,42 +165,67 @@
 <script th:src="@{/web-assets/js/main.js}"></script>
 
 <script>
-    const btns = document.querySelectorAll('#form-update-password span.input-group-text');
-    const passwordEls = document.querySelectorAll('#form-update-password input[type="password"]');
-    btns.forEach((btn, index) => {
-        btn.addEventListener("click", () => {
-            const passwordEl = passwordEls[index];
-            if (passwordEl.type === "password") {
-                passwordEl.type = "text";
-                btn.innerHTML = '<i class="fa-regular fa-eye-slash"></i>';
-            } else {
-                passwordEl.type = "password";
-                btn.innerHTML = '<i class="fa-regular fa-eye"></i>';
-            }
-        })
-    })
-</script>
-
-<script>
-    const formLoginEl = document.getElementById('form-login');
+    const formRegisterEl = document.getElementById('form-register');
+    const nameEl = document.getElementById('name');
     const emailEl = document.getElementById('email');
     const passwordEl = document.getElementById('password');
-    formLoginEl.addEventListener('submit', async function (e) {
+    const rePasswordEl = document.getElementById('re-enter-password');
+
+    function isValidEmail(email) {
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return emailRegex.test(email);
+    }
+
+    formRegisterEl.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const email = emailEl.value;
-        const password = passwordEl.value;
-        const data = {
-            email,
-            password
-        };
+
+        if (emailEl.value === ""){
+            toastr.error("Email không được để trống");
+            return;
+        }
+        if (!isValidEmail(emailEl.value)) {
+            toastr.error("Email không đúng định dạng");
+            return;
+        }
+
+        if (nameEl.value === ""){
+            toastr.error("Tên đăng nhập không được để trống");
+            return;
+        }
+
+        if (passwordEl.value === ""){
+            toastr.error("Mật khẩu không được để trống");
+            return;
+        }
+
+        if (rePasswordEl.value === ""){
+            toastr.error("Mật khẩu không được để trống");
+            return;
+        }
+
+        if (passwordEl.value !== rePasswordEl.value) {
+            toastr.error("Vui lòng nhập lại mật khẩu");
+            return;
+        }
+
+        console.log(emailEl.value);
+
+        const request = {
+            name: nameEl.value,
+            email: emailEl.value,
+            password: passwordEl.value,
+            confirmPassword: rePasswordEl.value,
+
+        }
+
         try {
-            const response = await axios.post('/api/auth/login', data);
-            toastr.success('Đăng nhập thành công');
+            const res = await axios.post('/api/auth/register', request);
+            toastr.success("Bạn đã đăng ký thành công");
             setTimeout(() => {
-                window.location.href = '/';
+                window.location.href = '/dang-nhap';
             }, 2000);
         } catch (e) {
-            toastr.error('Đăng nhập thất bại');
+            toastr.error(e.response.data.message);
         }
     });
 </script>

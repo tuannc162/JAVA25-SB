@@ -222,9 +222,9 @@ const deleteReview = async (id) => {
     }
 }
 
-
-
 render();
+
+
 
 
 

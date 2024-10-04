@@ -42,7 +42,8 @@
                 </div>
 
                 <div>
-                    <a th:if="${session.currentUser == null}" class="text-white" href="/dang-nhap">Đăng nhập</a>
+                    <a th:if="${session.currentUser == null}" class="text-white me-3" href="/dang-nhap">Đăng nhập</a>
+                    <a th:if="${session.currentUser == null}" class="text-white" href="/dang-ky">Đăng ký</a>
 
                     <div class="dropdown" th:if="${session.currentUser != null}">
                         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
@@ -63,7 +64,7 @@
                                 <a class="dropdown-item" href="/lich-su-xem-phim">Lịch sử xem phim</a>
                             </li>
                             <li>
-                                <span class="dropdown-item" style="cursor: pointer">Đăng xuất</span>
+                                <span class="dropdown-item" style="cursor: pointer" id="btn-logout">Đăng xuất</span>
                             </li>
                         </ul>
                     </div>
@@ -400,6 +401,6 @@
     console.log(reviews);
 </script>
 <script th:src="@{/web-assets/js/main.js}"></script>
-
+<script th:src="@{/web-assets/js/logout.js}"></script>
 </body>
 </html>

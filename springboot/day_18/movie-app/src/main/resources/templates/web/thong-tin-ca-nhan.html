@@ -37,7 +37,8 @@
                 </div>
 
                 <div>
-                    <a th:if="${session.currentUser == null}" class="text-white" href="/dang-nhap">Đăng nhập</a>
+                    <a th:if="${session.currentUser == null}" class="text-white me-3" href="/dang-nhap">Đăng nhập</a>
+                    <a th:if="${session.currentUser == null}" class="text-white" href="/dang-ky">Đăng ký</a>
 
                     <div class="dropdown" th:if="${session.currentUser != null}">
                         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
@@ -58,7 +59,7 @@
                                 <a class="dropdown-item" href="/lich-su-xem-phim">Lịch sử xem phim</a>
                             </li>
                             <li>
-                                <span class="dropdown-item" style="cursor: pointer">Đăng xuất</span>
+                                <span class="dropdown-item" style="cursor: pointer" id="btn-logout">Đăng xuất</span>
                             </li>
                         </ul>
                     </div>
@@ -243,6 +244,21 @@
 <script th:src="@{/web-assets/js/movie.js}"></script>
 <script th:src="@{/web-assets/js/main.js}"></script>
 
+// Đăng xuất
+<!--<script>-->
+<!--    document.getElementById('btn-logout').addEventListener('click', async function () {-->
+<!--        try {-->
+<!--            const response = await axios.post('/api/auth/logout');-->
+<!--            toastr.success(response.data);-->
+<!--            setTimeout(() => {-->
+<!--                window.location.href = '/dang-nhap';-->
+<!--            }, 2000);-->
+<!--        } catch (error) {-->
+<!--            toastr.error('Đăng xuất thất bại');-->
+<!--        }-->
+<!--    });-->
+<!--</script>-->
+
 <script>
     const btns = document.querySelectorAll('#form-update-password span.input-group-text');
     const passwordEls = document.querySelectorAll('#form-update-password input[type="password"]');
@@ -372,5 +388,6 @@
         }
     });
 </script>
+<script th:src="@{/web-assets/js/logout.js}"></script>
 </body>
 </html>
