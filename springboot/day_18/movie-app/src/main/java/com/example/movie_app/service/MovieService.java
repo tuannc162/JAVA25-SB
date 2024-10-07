@@ -36,4 +36,12 @@ public class MovieService {
         Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by("rating").descending());
         return movieRepository.findTop6ByTypeAndIdNotAndStatusOrderByRatingDesc(type, id, status, pageable).getContent();
     }
+
+    public List<Movie> getAllMovies() {
+        return movieRepository.findAll(Sort.by("createdAt").descending());
+    }
+
+    public Movie getMovieById(Integer id) {
+        return movieRepository.findById(id).orElse(null);
+    }
 }
