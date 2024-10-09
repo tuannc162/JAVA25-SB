@@ -25,7 +25,7 @@ public class Service {
     String description;
 
     Integer price;
-    Boolean isFree;
+    Boolean status;
 
     LocalDateTime createdAt;
     LocalDateTime updatedAt;

@@ -24,7 +24,6 @@ public class Room {
 
     String roomNumber;
     Boolean availability;
-    String type;
 
     @Column(columnDefinition = "TEXT")
     String description;

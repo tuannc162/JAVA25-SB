@@ -24,7 +24,6 @@ public class Review {
     @Column(columnDefinition = "TEXT")
     String comment;
 
-    LocalDateTime reviewDate;
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
 
