@@ -168,14 +168,15 @@
                                                     </option>
                                                 </select>
                                             </div>
+
                                             <div class="form-group">
                                                 <div class="thumbnail-preview-container mb-3">
-                                                    <img th:src="${movie.poster}" alt="" id="thumbnail"/>
+                                                    <img th:src="${movie.poster}" id="thumbnail" alt="" style="display:none; max-width: 100%;">
                                                 </div>
                                                 <label for="input-poster" class="btn btn-primary">
                                                     Chọn hình ảnh
                                                 </label>
-                                                <input type="file" id="input-poster" class="d-none">
+                                                <input type="file" id="input-poster" class="d-none" accept="image/*">
                                             </div>
                                         </div>
                                     </div>
@@ -193,6 +194,7 @@
     <script src="/admin-assets/plugins/select2/js/select2.full.min.js"></script>
     <script src="/admin-assets/plugins/jquery-validation/jquery.validate.min.js"></script>
     <script src="/admin-assets/plugins/jquery-validation/additional-methods.min.js"></script>
+
     <script th:inline="javascript">
         const movie = [[${movie}]];
 
@@ -320,6 +322,68 @@
                 alert(error.response.data.message);
             }
         });
+    </script>
+
+    <script>
+        const inputPoster = document.getElementById('input-poster');
+        const thumbnail = document.getElementById('thumbnail');
+
+        inputPoster.addEventListener('change', function () {
+            const file = inputPoster.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    thumbnail.src = e.target.result;
+                    thumbnail.style.display = 'block'; // Hiển thị ảnh thumbnail
+                };
+                reader.readAsDataURL(file); // Đọc file và tạo URL
+            } else {
+                thumbnail.style.display = 'none'; // Ẩn thumbnail nếu không có file
+            }
+        });
+
+        // Handle logic when click to button with id = "btn-update" -> check validate form
+        btnUpdate.addEventListener('click', async function () {
+            if (!$('#form-update-movie').valid()) {
+                return;
+            }
+
+            const file = inputPoster.files[0];
+
+            // Chỉ thêm file nếu có
+            if (file) {
+                formData.append('poster', file);
+            }
+
+            // Tạo request
+            const formData = new FormData();
+            formData.append('name', nameEl.value);
+            formData.append('trailerUrl', trailerUrlEl.value);
+            formData.append('description', descriptionEl.value);
+            formData.append('genreIds', genreEl.val().map(id => Number(id)));
+            formData.append('directorIds', directorEl.val().map(id => Number(id)));
+            formData.append('actorIds', actorEl.val().map(id => Number(id)));
+            formData.append('status', statusEl.value === "true");
+            formData.append('type', typeEl.value);
+            formData.append('releaseYear', Number(releaseYearEl.value));
+            formData.append('countryId', Number(countryEl.value));
+
+            // Gọi API để cập nhật phim
+            try {
+                const response = await axios.put(`/api/admin/movies/${movie.id}`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+                if (response.status === 200) {
+                    alert('Cập nhật phim thành công');
+                }
+            } catch (error) {
+                console.log(error);
+                alert(error.response.data.message);
+            }
+        });
+
     </script>
 </th:block>
 </body>
