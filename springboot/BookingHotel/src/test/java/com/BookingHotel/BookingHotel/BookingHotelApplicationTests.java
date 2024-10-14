@@ -506,12 +506,6 @@ class BookingHotelApplicationTests {
 
 
 
-
-
-
-
-
-
 	@Test
 	void contextLoads() {
 	}

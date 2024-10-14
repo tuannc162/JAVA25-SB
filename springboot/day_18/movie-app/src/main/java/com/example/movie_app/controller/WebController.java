@@ -45,8 +45,6 @@ public class WebController<HttpServletResquest> {
         return "web/index";
     }
 
-
-
     // /phim-bo?page=1&pageSize=12
     @GetMapping("/phim-bo")
     public String getPhimBoPage(Model model,

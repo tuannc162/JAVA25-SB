@@ -4,7 +4,7 @@ import com.example.movie_app.repository.ActorRepository;
 import com.example.movie_app.repository.CountryRepository;
 import com.example.movie_app.repository.DirectorRepository;
 import com.example.movie_app.repository.GenresRepository;
-import com.example.movie_app.service.MovieService;
+import com.example.movie_app.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin/movies")
 public class MovieController {
     private final MovieService movieService;
-    private final CountryRepository countryRepository;
-    private final GenresRepository genreRepository;
-    private final ActorRepository actorRepository;
-    private final DirectorRepository directorRepository;
+    private final CountryService countryService;
+    private final GenreService genreService;
+    private final ActorService actorService;
+    private final DirectorService directorService;
 
 
     @GetMapping
@@ -31,20 +31,20 @@ public class MovieController {
 
     @GetMapping("/create")
     public String getCreatePage(Model model) {
-        model.addAttribute("countries", countryRepository.findAll());
-        model.addAttribute("genres", genreRepository.findAll());
-        model.addAttribute("actors", actorRepository.findAll());
-        model.addAttribute("directors", directorRepository.findAll());
+        model.addAttribute("countries", countryService.getAllCountries());
+        model.addAttribute("genres", genreService.getAllGenres());
+        model.addAttribute("actors", actorService.getAllActors());
+        model.addAttribute("directors", directorService.getAllDirectors());
         return "admin/movie/create";
     }
 
     @GetMapping("/{id}/detail")
     public String getDetailPage(Model model ,@PathVariable Integer id) {
         model.addAttribute("movie", movieService.getMovieById(id));
-        model.addAttribute("countries", countryRepository.findAll());
-        model.addAttribute("genres", genreRepository.findAll());
-        model.addAttribute("actors", actorRepository.findAll());
-        model.addAttribute("directors", directorRepository.findAll());
+        model.addAttribute("countries", countryService.getAllCountries());
+        model.addAttribute("genres", genreService.getAllGenres());
+        model.addAttribute("actors", actorService.getAllActors());
+        model.addAttribute("directors", directorService.getAllDirectors());
         return "admin/movie/detail";
     }
 }

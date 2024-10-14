@@ -2,6 +2,7 @@ package com.example.movie_app.service;
 
 import com.example.movie_app.entity.*;
 import com.example.movie_app.model.enums.MovieType;
+import com.example.movie_app.model.request.CreateMovieRequest;
 import com.example.movie_app.model.request.UpsertMovieRequest;
 import com.example.movie_app.repository.*;
 import com.github.slugify.Slugify;
@@ -98,5 +99,34 @@ public class MovieService {
         } catch (Exception e) {
             throw new RuntimeException("Failed to upload file");
         }
+    }
+
+    public Movie createMovie(CreateMovieRequest request) {
+        Country country = countryRepository.findById(request.getCountryId())
+                .orElseThrow(() -> new RuntimeException("Country not found"));
+
+        List<Genres> genres = genreRepository.findAllById(request.getGenreIds());
+        List<Director> directors = directorRepository.findAllById(request.getDirectorIds());
+        List<Actor> actors = actorRepository.findAllById(request.getActorIds());
+
+        Slugify slugify = Slugify.builder().build();
+        Movie movie = Movie.builder()
+                .name(request.getName())
+                .slug(slugify.slugify(request.getName()))
+                .poster("https://placehold.co/600x400?text=" + request.getName().substring(0,1).toUpperCase())
+                .trailerUrl(request.getTrailerUrl())
+                .description(request.getDescription())
+                .genres(genres)
+                .actors(actors)
+                .directors(directors)
+                .status(request.getStatus())
+                .type(request.getType())
+                .releaseYear(request.getReleaseYear())
+                .country(country)
+                .createdAt(LocalDateTime.now())
+                .publishedAt(request.getStatus() ? LocalDateTime.now() : null)
+                .build();
+
+        return movieRepository.save(movie);
     }
 }
