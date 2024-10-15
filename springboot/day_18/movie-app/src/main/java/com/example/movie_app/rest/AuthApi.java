@@ -21,16 +21,8 @@ public class AuthApi {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-        try {
-            authService.login(request);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            ErrorResponse errorResponse = ErrorResponse.builder()
-                    .status(HttpStatus.BAD_REQUEST)
-                    .message(e.getMessage())
-                    .build();
-            return ResponseEntity.badRequest().body(errorResponse);
-        }
+        authService.login(request);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/logout")

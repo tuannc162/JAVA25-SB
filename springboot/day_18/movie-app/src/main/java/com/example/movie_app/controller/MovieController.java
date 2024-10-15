@@ -21,6 +21,7 @@ public class MovieController {
     private final GenreService genreService;
     private final ActorService actorService;
     private final DirectorService directorService;
+    private final EpisodeService episodeService;
 
 
     @GetMapping
@@ -45,6 +46,9 @@ public class MovieController {
         model.addAttribute("genres", genreService.getAllGenres());
         model.addAttribute("actors", actorService.getAllActors());
         model.addAttribute("directors", directorService.getAllDirectors());
+
+        // Lấy danh sách tập phim của phim và sắp xếp theo dislayOrder tăng dần
+        model.addAttribute("episodes", episodeService.getEpisodesByMovieId(id));
         return "admin/movie/detail";
     }
 }

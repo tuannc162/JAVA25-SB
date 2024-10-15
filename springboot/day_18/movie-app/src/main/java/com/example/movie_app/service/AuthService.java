@@ -1,6 +1,8 @@
 package com.example.movie_app.service;
 
 import com.example.movie_app.entity.User;
+import com.example.movie_app.exception.BadRequestException;
+import com.example.movie_app.exception.NotFoundException;
 import com.example.movie_app.model.enums.UserRole;
 import com.example.movie_app.model.request.LoginRequest;
 import com.example.movie_app.model.request.RegisterRequest;
@@ -22,10 +24,10 @@ public class AuthService {
 
     public void login(LoginRequest request) {
         User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+                .orElseThrow(() -> new NotFoundException("User not found"));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new IllegalArgumentException("Invalid password");
+            throw new BadRequestException("Invalid password");
         }
         // Có thể lưu trong cookie, redis, database, ....
         session.setAttribute("currentUser", user);

@@ -54,6 +54,7 @@ public interface MovieRepository extends JpaRepository<Movie,Integer> {
     Page<Movie> findTop6ByTypeAndIdNotAndStatusOrderByRatingDesc(MovieType type, Integer id, Boolean status, Pageable pageable);
 
 
+
     // C2: Lấy danh sách -> sử dụng stream API để lọc theo yêu cầu. Lấy danh sách (tất cả phim, danh sách phim bộ, danh sách phim có status = true)
 
 

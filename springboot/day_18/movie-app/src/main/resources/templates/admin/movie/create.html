@@ -288,7 +288,7 @@
                 return;
             }
 
-            // tao request
+            // Tạo request
             const request = {
                 name: nameEl.value,
                 trailerUrl: trailerUrlEl.value,
@@ -302,10 +302,10 @@
                 countryId: Number(countryEl.value)
             }
 
-            // goi api
+            // Gọi API để tạo mới phim
             try {
                 let res = await axios.post(`/api/admin/movies`, request);
-                if (response.status === 200) {
+                if (res.status === 200) {
                     toastr.success("Bạn đã tạo phim thành công");
                 }
                 resetDataMovie();

@@ -8,6 +8,7 @@
     <th:block id="css">
         <link rel="stylesheet" href="/admin-assets/plugins/select2/css/select2.min.css"/>
         <link rel="stylesheet" href="/admin-assets/dist/css/style.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     </th:block>
 </head>
 
@@ -171,12 +172,12 @@
 
                                             <div class="form-group">
                                                 <div class="thumbnail-preview-container mb-3">
-                                                    <img th:src="${movie.poster}" id="thumbnail" alt="" style="display:none; max-width: 100%;">
+                                                    <img th:src="${movie.poster}" id="thumbnail" alt="">
                                                 </div>
                                                 <label for="input-poster" class="btn btn-primary">
                                                     Chọn hình ảnh
                                                 </label>
-                                                <input type="file" id="input-poster" class="d-none" accept="image/*">
+                                                <input type="file" id="input-poster" class="d-none">
                                             </div>
                                         </div>
                                     </div>
@@ -185,15 +186,143 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-content-center mb-3">
+                                    <h4>Danh sách tập phim</h4>
+                                    <button class="btn btn-primary" onclick="openModalCreateEpisode()">Tạo tập phim
+                                    </button>
+                                </div>
+                                <table class="table table-bordered table-hover" id="table-episode">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tên tập phim</th>
+                                        <th style="width: 50%">Link</th>
+                                        <th>Thời lượng</th>
+                                        <th>Trạng thái</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="episode : ${episodes}">
+                                        <td th:text="${episode.displayOrder}"></td>
+                                        <td th:text="${episode.name}"></td>
+                                        <td
+                                                th:text="${episode.videoUrl != null ? episode.videoUrl : 'Chưa cập nhật'}"
+                                                class="videoUrl"
+                                                style="word-break: break-all"
+                                        ></td>
+                                        <td th:text="${episode.duration != null ? episode.duration : 'Chưa cập nhật'}"
+                                            class="duration"></td>
+                                        <td th:text="${episode.status ? 'Công khai' : 'Ẩn'}"></td>
+                                        <td>
+                                            <label class="btn btn-warning btn-sm mb-0"
+                                                   th:for="|input-video-${episode.id}|">
+                                                <i class="fas fa-upload"></i>
+                                            </label>
+                                            <input
+                                                    type="file"
+                                                    th:id="|input-video-${episode.id}|"
+                                                    class="d-none"
+                                                    th:onchange="|uploadEpisodeVideo(${episode.id}, event)|"
+                                            >
+                                            <button class="btn btn-primary btn-sm"
+                                                    th:onclick="|showEpisodePreview(${episode.id})|">
+                                                <span class="play-icon" data-bs-toggle="modal" data-bs-target="#modalPreview">
+                                                    <i class="fas fa-play"></i>
+                                                </span>
+
+                                            </button>
+                                            <button class="btn btn-success btn-sm"
+                                                    th:onclick="|openModalUpdateEpisode(${episode.id})|">
+                                                <i class="fas fa-pencil-alt"></i>
+                                            </button>
+                                            <button class="btn btn-danger btn-sm"
+                                                    th:onclick="|deleteEpisode(${episode.id})|"><i
+                                                    class="fas fa-trash-alt"></i></button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </div>
+
+    <div class="modal fade" id="modalPreview">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Video Preview</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <video width="100%" controls="">
+                        <source src="" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+<!--                    <iframe style="aspect-ratio: 16 / 9" width="100%" src="https://www.youtube.com/embed/MjxPoqCvvVs?si=O86GBpvOpevCw1sa"-->
+<!--                            title="YouTube video player" frameborder="0"-->
+<!--                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"-->
+<!--                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalEpisode">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Default Modal</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="form-episode" novalidate="novalidate">
+                        <div class="form-group">
+                            <label>Tên tập phim</label>
+                            <input type="text" class="form-control" id="episodeName" name="name">
+                        </div>
+                        <div class="form-group">
+                            <label>Tập số bao nhiêu</label>
+                            <input type="text" class="form-control" id="episodeDisplayOrder" name="displayOrder">
+                        </div>
+                        <div class="form-group">
+                            <label>Trạng thái</label>
+                            <select class="form-control" id="episodeStatus" name="status">
+                                <option value="false">Ẩn</option>
+                                <option value="true">Công khai</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Xác nhận</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
 
 <th:block id="js">
     <script src="/admin-assets/plugins/select2/js/select2.full.min.js"></script>
     <script src="/admin-assets/plugins/jquery-validation/jquery.validate.min.js"></script>
     <script src="/admin-assets/plugins/jquery-validation/additional-methods.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script th:inline="javascript">
         const movie = [[${movie}]];
@@ -322,69 +451,33 @@
                 alert(error.response.data.message);
             }
         });
-    </script>
 
-    <script>
-        const inputPoster = document.getElementById('input-poster');
-        const thumbnail = document.getElementById('thumbnail');
-
-        inputPoster.addEventListener('change', function () {
-            const file = inputPoster.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    thumbnail.src = e.target.result;
-                    thumbnail.style.display = 'block'; // Hiển thị ảnh thumbnail
-                };
-                reader.readAsDataURL(file); // Đọc file và tạo URL
-            } else {
-                thumbnail.style.display = 'none'; // Ẩn thumbnail nếu không có file
-            }
-        });
-
-        // Handle logic when click to button with id = "btn-update" -> check validate form
-        btnUpdate.addEventListener('click', async function () {
-            if (!$('#form-update-movie').valid()) {
-                return;
-            }
-
-            const file = inputPoster.files[0];
-
-            // Chỉ thêm file nếu có
-            if (file) {
-                formData.append('poster', file);
-            }
-
-            // Tạo request
-            const formData = new FormData();
-            formData.append('name', nameEl.value);
-            formData.append('trailerUrl', trailerUrlEl.value);
-            formData.append('description', descriptionEl.value);
-            formData.append('genreIds', genreEl.val().map(id => Number(id)));
-            formData.append('directorIds', directorEl.val().map(id => Number(id)));
-            formData.append('actorIds', actorEl.val().map(id => Number(id)));
-            formData.append('status', statusEl.value === "true");
-            formData.append('type', typeEl.value);
-            formData.append('releaseYear', Number(releaseYearEl.value));
-            formData.append('countryId', Number(countryEl.value));
-
-            // Gọi API để cập nhật phim
+        // Update poster ---------------------------------------------
+        const inputPosterEl = document.getElementById('input-poster');
+        const posterEl = document.getElementById('thumbnail');
+        inputPosterEl.addEventListener("change", async (e) => {
             try {
-                const response = await axios.put(`/api/admin/movies/${movie.id}`, formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                });
-                if (response.status === 200) {
-                    alert('Cập nhật phim thành công');
-                }
+                const file = e.target.files[0];
+                const formData = new FormData();
+                formData.append('file', file);
+                console.log(file);
+
+                const res = await axios.post(`/api/admin/movies/${movie.id}/upload-poster`, formData);
+                console.log(res);
+                posterEl.src = res.data.url;
+                alert('Upload ảnh thành công');
             } catch (error) {
-                console.log(error);
+                console.log(error)
                 alert(error.response.data.message);
             }
         });
 
     </script>
+
+
+
+
+
 </th:block>
 </body>
 

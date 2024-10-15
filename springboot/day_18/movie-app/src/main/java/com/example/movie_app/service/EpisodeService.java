@@ -22,4 +22,9 @@ public class EpisodeService {
                 .findByMovie_IdAndStatusAndDisplayOrder(movieId, true, covertTap)
                 .orElse(null);
     }
+
+
+//    public List<Episode> getEpisodeListOfMovieByAdmin(Integer movieId) {
+//        return episodeRepository.findByMovie_IdOrderByDisplayOrderAsc(movieId);
+//    }
 }
